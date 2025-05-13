@@ -192,6 +192,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+
 # Ruff stuff:
 .ruff_cache/
 
@@ -205,6 +206,5 @@ src/ds_capstone/
 models/
 
 # Later implementation
-/smoke_signals/configs
-/smoke_signals/scripts
-/smoke_signals/src
+smoke_signals/configs
+smoke_signals/scripts
