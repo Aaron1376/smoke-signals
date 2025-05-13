@@ -11,7 +11,7 @@ from components.nav_bar import create_navbar
 app = Dash(
     __name__,
     use_pages=True,
-    pages_folder="pages",
+    pages_folder="pages", 
     external_stylesheets=[dbc.themes.BOOTSTRAP],
 )
 server = app.server

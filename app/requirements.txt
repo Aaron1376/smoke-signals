@@ -5,3 +5,7 @@ flask
 gunicorn
 google-cloud-storage
 dash-bootstrap-components
+psutil
+google-cloud-bigquery
+google-cloud-bigquery-storage
+db-dtypes

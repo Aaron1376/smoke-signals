@@ -2,7 +2,8 @@ from google.cloud import storage
 import numpy as np
 import tempfile
 import os
-
+import io
+import pandas as pd
 def get_npy_from_gcs(bucket_name, source_blob_name):
     """
     Download a .npy file from Google Cloud Storage and return its content as a NumPy array.
@@ -27,3 +28,18 @@ def get_npy_from_gcs(bucket_name, source_blob_name):
         # Clean up the temporary file
         if os.path.exists(temp_file_path):
             os.remove(temp_file_path)
+
+
+def load_csv_from_gcs(bucket_name, blob_name):
+    """
+    Load a CSV file from Google Cloud Storage into a Pandas DataFrame.
+    """
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(blob_name)
+
+    if not blob.exists():
+        raise FileNotFoundError(f"Blob {blob_name} not found in bucket {bucket_name}")
+
+    data = blob.download_as_text()
+    return pd.read_csv(io.StringIO(data))

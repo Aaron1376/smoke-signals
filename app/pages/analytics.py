@@ -7,17 +7,27 @@ from components.time_series import layout_time_series
 dash.register_page(__name__, path="/analytics", name="Findings")
 
 layout = html.Div([
-
-    # Navbar + Hero (no TS code here!)
+    # Hero Section
     html.Section(
         html.Div([
-            html.H1("Analytics Dashboard"),
-            html.P("Interactive charts to explore your data", className="lead")
+            html.H1("Analytics Dashboard", className="hero-title"),
+            html.P(
+                "Explore PM2.5 levels across California during wildfire seasons",
+                className="hero-text"
+            ),
         ], className="container"),
-        className="hero"
+        className="hero hero--secondary"
     ),
 
-    # ← embeds all the time series controls & graph
-    layout_time_series()
-
+    # Time Series Section
+    html.Section(
+        html.Div([
+            html.H2("Time Series Analysis", className="section-title"),
+            html.Div(
+                layout_time_series(),
+                className="analytics-container"
+            ),
+        ], className="container"),
+        className="section section--white"
+    ),
 ])
