@@ -67,6 +67,10 @@ def layout_chi_square():
             html.Img(
                 src="/assets/RandomForest.png",  # Path to the saved image
                 style={"width": "100%", "height": "600px", "objectFit": "contain", "border": "none"}  # Adjust size as needed
+            ),
+            html.P(
+                "These graphs show that fire activity and seasonality are the dominant drivers of PM₂.₅: in the lollipop chart, fire_num and julian_date have by far the highest chi-square values, indicating the strongest statistical association with PM₂.₅ categories, while in the Random Forest bar chart those same features top the permutation importances, confirming they also contribute most to predictive accuracy. Other meteorological factors—like surface pressure and boundary-layer height—appear significant but secondary, and variables such as wind components and precipitation add comparatively little unique information.",
+                style={"textAlign": "center", "marginTop": "1rem", "fontSize": "16px", "color": "#4A5568"}
             )
         ], style={
             "padding": "2rem",
@@ -83,19 +87,25 @@ def layout_chi_square():
 def layout_chico_yuba_comparison():
     return html.Div([
         html.H3("Urban vs Rural", style={"textAlign": "center", "marginTop": "2rem"}),
+
+        # Embed the Chico-Yuba Comparison Graph and Comment
         html.Div([
             html.Iframe(
                 src="/assets/chico_yuba_comparison.html",  # Path to the HTML file in the assets folder
-                style={"width": "100%", "height": "800px", "border": "none"}  # Increased height to 800px
+                style={"width": "100%", "height": "800px", "border": "none"}  # Adjust height as needed
+            ),
+            html.P(
+                "This side-by-side comparison suggests that Yuba City’s more urban environment experienced longer, higher PM₂.₅ elevations—likely because higher baseline pollution and building-induced airflow changes in urban areas trap wildfire smoke more effectively—whereas Chico’s more open, rural setting showed sharper but shorter spikes as smoke dispersed more quickly",
+                style={"textAlign": "center", "marginTop": "1rem", "fontSize": "16px", "color": "#4A5568"}
             )
         ], style={
-            "padding": "2rem",  # Increased padding for better spacing
+            "padding": "2rem",
             "backgroundColor": "#f9f9f9",
             "border": "1px solid #ddd",
             "borderRadius": "8px",
-            "boxShadow": "0 4px 8px rgba(0, 0, 0, 0.2)",  # Slightly larger shadow for emphasis
-            "margin": "2rem auto",  # Increased margin for better spacing
-            "maxWidth": "95%"  # Increased maxWidth to make the box wider
+            "boxShadow": "0 4px 8px rgba(0, 0, 0, 0.2)",
+            "margin": "2rem auto",
+            "maxWidth": "95%"
         })
     ], className="chico-yuba-comparison-box")
 
@@ -167,11 +177,12 @@ layout = html.Div([
                         html.P("Based on our comprehensive analysis of PM2.5 levels during California wildfire seasons:", 
                                className="conclusion-text"),
                         html.Ul([
-                            html.Li("Strong correlation between meteorological conditions and air quality"),
-                            html.Li("Temporal patterns indicate predictable air quality deterioration"),
-                            html.Li("Geographic location significantly influences PM2.5 exposure levels"),
-                            html.Li("Statistical evidence supports the impact of multiple environmental factors"),
-                            html.Li("Data suggests the need for region-specific air quality management strategies")
+                            html.Li("Fire counts are the strongest single predictor of PM₂.₅, showing the highest chi-square and permutation importance."),
+                            html.Li("Day-of-year (julian_date) drives clear seasonal cycles in PM₂.₅ levels."),
+                            html.Li("Surface pressure and boundary-layer height both exert significant control over pollutant accumulation."),
+                            html.Li("Fire radiative power metrics and temperature variables contribute moderately but less than top features."),
+                            html.Li("During the Dixie Fire, Chico saw sharp, short-lived PM₂.₅ spikes while Yuba City experienced more prolonged elevated levels."),
+                            html.Li("The Random Forest’s predicted net PM₂.₅ closely follows observed trends but underestimates the most extreme peak events.")
                         ], className="conclusion-list")
                     ], className="content-box")
                 ], className="analysis-box")

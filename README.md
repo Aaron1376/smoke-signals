@@ -65,7 +65,75 @@ To ensure the web application and model code run correctly:
 2. Open model.py and run it to test the forecasting pipeline and view printed metrics.
 3. Ensure your environment has access to BigQuery if fetching live data.
 
+## Project Pipeline
 
+```
++-------------------------------+
+|       Data Collection         |
++-------------------------------+
+              ↓
++-------------------------------+
+| Cleaning & Feature Engineering|
++-------------------------------+
+              ↓
++-------------------------------+
+|     Statistical Testing       |
++-------------------------------+
+              ↓
++-------------------------------+
+|   Model Training (ML)     |
++-------------------------------+
+              ↓
++-------------------------------+
+| Evaluation & Visualization    |
++-------------------------------+
+              ↓
++-------------------------------+
+| Web Dashboard Deployment      |
++-------------------------------+
+```
+## Pipeline Component Breakdown
+
+Each stage of our pipeline is modular and purpose-built to support clear experimentation, fast iteration, and seamless deployment.
+
+### 1. Data Collection
+- **Source**: 
+- **Scope**: 
+- **Automation**: Queried and filtered with BigQuery to ensure relevant, high-quality data for modeling
+
+### 2. Data Cleaning & Feature Engineering
+- **Structured Features**: Meteorlogical(temperature, surface presure, precipitation, frp), PM2.5, cities and timestamp
+- **Feature Engineering**:
+  -  Created a AQI categorical column
+  -  Converted numpy files to a csv file
+
+### 3. Statistical Testing
+- **Tests Used**: Chi-squared tests
+- **Purpose**: Validate the significance of key features before modeling
+- **Visuals**: Feature Importance chart and Correlation Heatmaps
+
+### 4. Model Training
+- **Baseline Model**: Random Forest Classifier for explainability and benchmarking
+- **Advanced Model**: Graph neural network to predict PM2.5 levels
+- **Data Configurations**: 
+- **Evaluation**: Compared predicted to the observed PM2.5 levels
+
+### 5. Visualization & Analysis
+- **Libraries**: Plotly, Seaborn, Folium, Dash, Scipy
+- **Visualizations**:
+  - Time Series Forecasting
+  - Interactive map of sensors
+  - Heatmaps of Meteorological data
+  - Feature importance comparisons
+- **Widgets**: Precision-adjustable Folium maps for mapping
+
+### 6. Web Dashboard Deployment
+- **Frontend**: Modular layout using Dash components (`pages/`, `nav_bar.py`)
+- **Backend**: Python with Dash callbacks and plotting logic (`components/`)
+- **Hosting**: Google App Engine (`app.yaml` handles configuration)
+- **Structure**: Four main pages — Home, Objectives, Methodology, Findings — plus reusable assets and styles
+
+---
 ### Deploy to Google App Engine
 ```bash
 gcloud app deploy
