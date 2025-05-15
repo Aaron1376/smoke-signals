@@ -1,115 +1,141 @@
 # Smoke Signals: Time Series Forecasting of PM2.5 Amid California Wildfires
 
-<a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
-    <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
-</a>
+This is the official repository for **"Smoke Signals"**, a CS 163 final project by Aaron Sam and Jonathan Manzano. This project analyzes PM2.5 levels during California wildfires to forecast air quality and identify key environmental factors. The findings are presented in an interactive web dashboard.
 
-Capstone Project for SJSU SP25 CS 163: Data Science Senior Project
+**Live Website**: [https://smoke-signals-pmgnn-457202.uw.r.appspot.com/analytics]
 
-[//]: # (## Project Organization)
+---
 
-[//]: # ()
-[//]: # (```)
+## Project Overview
 
-[//]: # (├── LICENSE            <- Open-source license if one is chosen)
+Our goal is to investigate how wildfire events impact PM2.5 levels and forecast air quality using advanced time series models. We:
+- Perform statistical analysis and feature engineering
+- Train multiple GNN models
+- Visualize temporal and spatial trends
+- Deploy results in an interactive Dash web application
 
-[//]: # (├── Makefile           <- Makefile with convenience commands like `make data` or `make train`)
+---
 
-[//]: # (├── README.md          <- The top-level README for developers using this project.)
+## Data Source & Citation
 
-[//]: # (├── data)
+Our data was collected from the following sources:
 
-[//]: # (│   ├── external       <- Data from third party sources.)
+- **[California Air Resources Board (CARB)](https://ww2.arb.ca.gov/)**
+- **[U.S. EPA Air Quality System (AQS)](https://www.epa.gov/aqs)**
+- **[ERA5 Reanalysis (ECMWF)](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)**
 
-[//]: # (│   ├── interim        <- Intermediate data that has been transformed.)
 
-[//]: # (│   ├── processed      <- The final, canonical data sets for modeling.)
+Please cite the following if using the dataset:
 
-[//]: # (│   └── raw            <- The original, immutable data dump.)
+> Liao, K., Buch, J., Lamb, K. D., & Gentine, P. "Simulating the air quality impact of prescribed fires using graph neural network-based PM2.5 forecasts." Environmental Data Science, 2025.
 
-[//]: # (│)
+> Liao, K. "PM2.5_Forecasting_GNN." GitHub, 2023. [https://github.com/kyleenliao/PM2.5_Forecasting_GNN](https://github.com/kyleenliao/PM2.5_Forecasting_GNN).
 
-[//]: # (├── docs               <- A default mkdocs project; see www.mkdocs.org for details)
+---
 
-[//]: # (│)
+## Setup Instructions
 
-[//]: # (├── models             <- Trained and serialized models, model predictions, or model summaries)
+### Prerequisites
+- Python 3.12+
+- Google Cloud SDK (for deployment)
+- Git installed
 
-[//]: # (│)
+### Install Dependencies
 
-[//]: # (├── notebooks          <- Jupyter notebooks. Naming convention is a number &#40;for ordering&#41;,)
+Clone the repo and install required packages:
 
-[//]: # (│                         the creator's initials, and a short `-` delimited description, e.g.)
+```bash
+git clone https://github.com/your-username/smoke-signals.git
+cd smoke-signals
+python -m venv env
+source env/bin/activate  # On Windows: .\env\Scripts\activate
+pip install -r requirements.txt
+```
 
-[//]: # (│                         `1.0-jqp-initial-data-exploration`.)
+### Run Locally
+```bash
+cd app/
+python app.py
+```
 
-[//]: # (│)
+### Testing the Setup
+To ensure the web application and model code run correctly:
 
-[//]: # (├── pyproject.toml     <- Project configuration file with package metadata for )
+1. Run webapp.py and confirm Dash loads on http://127.0.0.1:8050.
+2. Open model.py and run it to test the forecasting pipeline and view printed metrics.
+3. Ensure your environment has access to BigQuery if fetching live data.
 
-[//]: # (│                         ds_capstone and configuration for tools like black)
 
-[//]: # (│)
+### Deploy to Google App Engine
+```bash
+gcloud app deploy
+```
 
-[//]: # (├── references         <- Data dictionaries, manuals, and all other explanatory materials.)
+Make sure your Google Cloud project is set up and authenticated locally using:
 
-[//]: # (│)
+```bash
+gcloud auth login
+gcloud config set project [YOUR_PROJECT_ID]
+```
 
-[//]: # (├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.)
 
-[//]: # (│   └── figures        <- Generated graphics and figures to be used in reporting)
 
-[//]: # (│)
 
-[//]: # (├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.)
+### Repository Structure
+```plaintext
+smoke-signals/
+├── app/
+│   ├── components/
+│   │   ├── nav_bar.py             # Reusable navigation bar
+│   │   ├── graphs.py              # graphs for site
+│   │   └── time_series.py         # time series graphs
+│   ├── modules/
+│   │     ├── data_loader.py
+│   │     └── utils.py
+│   ├── assets/
+│   │   └── [styles.css]           # Styling   
+│   │                        (colors,spacing,layout dicts)
+│   ├── pages/
+│   │   ├── home.py                # Homepage content
+│   │   ├── analytics.py           # Main research findings 
+│   │   │                          and visualizations
+│   │   └── proposal.py            # Project goals and 
+│   │                              broader impact
+│   │
+│   │ 
+│   ├── app.py                  # Main Dash entry point
+│   ├── requirements.txt           # Project dependencies
+│   └── app.yaml                   # Google App Engine deployment config
+│
+├── model/
+│   └── model.py                   # ARIMA, LSTM, and GNN pipelines
+│
+└── data/                          # (Optional) Sample processed datasets
 
-[//]: # (│                         generated with `pip freeze > requirements.txt`)
+```
+---
 
-[//]: # (│)
+## Key Files
+| File/Dir                       | Description |
+|-------------------------------|-------------|
+| `app/app.py`                   | Launches the Dash web app |
+| `app/pages/`           | Pages: `home.py`, `analytics.py`, `proposal.py` |
+| `app/visuals/analysis.py` | All Dash charts, maps, and visual logic |
+| `model/model.py`              | ML models: TF-IDF + PyTorch NN, Random Forests, feature engineering |
+| `app/requirements.txt`            | List of Python packages |
+| `app/app.yaml`                    | App Engine configuration for deployment |
+| 
 
-[//]: # (├── setup.cfg          <- Configuration file for flake8)
 
-[//]: # (│)
+## Key Features
+- Time Series Forecasting: Uses GNNs for accurate PM2.5 predictions
+- Graph Neural Networks: Leverages spatial relationships between monitoring stations for improved forecasting.
+- Interactive Visualizations: Includes time series plots, seasonal decomposition, and spatial heatmaps.
+- Modular Dash Layout: Each section of the site (Home, Objectives, Findings) is rendered via individual Dash pages.
+- Cloud Deployment: Fully deployed to Google Cloud Platform using App Engine, with configuration managed by app.yaml.
 
-[//]: # (└── ds_capstone   <- Source code for use in this project.)
+---
+## Authors
+- Jonathan Manzano
+- Aaron Sam
 
-[//]: # (    │)
-
-[//]: # (    ├── __init__.py             <- Makes ds_capstone a Python module)
-
-[//]: # (    │)
-
-[//]: # (    ├── config.py               <- Store useful variables and configuration)
-
-[//]: # (    │)
-
-[//]: # (    ├── dataset.py              <- Scripts to download or generate data)
-
-[//]: # (    │)
-
-[//]: # (    ├── features.py             <- Code to create features for modeling)
-
-[//]: # (    │)
-
-[//]: # (    ├── modeling                )
-
-[//]: # (    │   ├── __init__.py )
-
-[//]: # (    │   ├── predict.py          <- Code to run model inference with trained models          )
-
-[//]: # (    │   └── train.py            <- Code to train models)
-
-[//]: # (    │)
-
-[//]: # (    └── plots.py                <- Code to create visualizations)
-
-[//]: # (```)
-
---------
-
-## Citations
-
-This project builds upon the following works:
-
-- K. Liao, J. Buch, K. D. Lamb and P. Gentine, "Simulating the air quality impact of prescribed fires using graph neural network-based PM2.5 forecasts," Environmental Data Science, vol. 4, article e11, pp. 1-14, 2025, doi: [10.1017/eds.2025.4](https://doi.org/10.1017/eds.2025.4).
-- K. Liao, "PM2.5_Forecasting_GNN," GitHub, 2023. [Online]. Available: [https://github.com/kyleenliao/PM2.5_Forecasting_GNN](https://github.com/kyleenliao/PM2.5_Forecasting_GNN). [Accessed: Apr. 17, 2025].

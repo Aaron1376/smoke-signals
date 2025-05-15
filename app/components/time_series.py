@@ -3,6 +3,8 @@ from dash import dcc, html, Input, Output, callback
 import plotly.graph_objects as go
 import pandas as pd
 from google.cloud import bigquery
+from plotly.subplots import make_subplots
+import plotly.io as pio
 
 
 # BigQuery Config
@@ -155,6 +157,127 @@ def update_ts(site, start, end, series):
 
     fig.update_layout(title=f"PM2.5 @ {label}", xaxis_title="Time", yaxis_title="µg/m³", hovermode='x')
     return fig
-    
-    
-  
+
+
+def plot_chico_yuba_comparison_side_by_side():
+    # Define the location IDs for Chico and Yuba City
+    chico_id = 3  # Replace with the actual location_id for Chico
+    yuba_city_id = 4  # Replace with the actual location_id for Yuba City
+
+    # Define the date range
+    start_date = "2021-07-13"
+    end_date = "2021-10-25"
+
+    # Query for Chico
+    chico_query = f"""
+        SELECT timestamp, observed
+        FROM `{PROJECT_ID}.{DATASET}.{TABLE_TS}`
+        WHERE location_id = @chico_id
+          AND timestamp BETWEEN @start_date AND @end_date
+        ORDER BY timestamp
+    """
+    chico_job_config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("chico_id", "INT64", chico_id),
+            bigquery.ScalarQueryParameter("start_date", "TIMESTAMP", start_date),
+            bigquery.ScalarQueryParameter("end_date", "TIMESTAMP", end_date),
+        ]
+    )
+    chico_df = bq_client.query(chico_query, job_config=chico_job_config).to_dataframe()
+    chico_df['timestamp'] = pd.to_datetime(chico_df['timestamp'])
+
+    # Query for Yuba City
+    yuba_city_query = f"""
+        SELECT timestamp, observed
+        FROM `{PROJECT_ID}.{DATASET}.{TABLE_TS}`
+        WHERE location_id = @yuba_city_id
+          AND timestamp BETWEEN @start_date AND @end_date
+        ORDER BY timestamp
+    """
+    yuba_city_job_config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("yuba_city_id", "INT64", yuba_city_id),
+            bigquery.ScalarQueryParameter("start_date", "TIMESTAMP", start_date),
+            bigquery.ScalarQueryParameter("end_date", "TIMESTAMP", end_date),
+        ]
+    )
+    yuba_city_df = bq_client.query(yuba_city_query, job_config=yuba_city_job_config).to_dataframe()
+    yuba_city_df['timestamp'] = pd.to_datetime(yuba_city_df['timestamp'])
+
+    # Create subplots
+    fig = make_subplots(
+        rows=1, cols=2,  # One row, two columns
+        subplot_titles=(
+            "<b>Chico (Observed PM2.5 During Dixie Fire)</b>", 
+            "<b>Yuba City (Observed PM2.5 During Dixie Fire)</b>"
+        ),
+        horizontal_spacing=0.1  # Adjust spacing between the subplots
+    )
+
+    # Add Chico data to the first subplot
+    if not chico_df.empty:
+        fig.add_trace(
+            go.Scatter(
+                x=chico_df['timestamp'],
+                y=chico_df['observed'],
+                mode='lines',
+                name='Chico (Observed)',
+                line=dict(color='blue', width=2),
+                fill='none'  # Ensure no fill under the line
+            ),
+            row=1, col=1
+        )
+
+    # Add Yuba City data to the second subplot
+    if not yuba_city_df.empty:
+        fig.add_trace(
+            go.Scatter(
+                x=yuba_city_df['timestamp'],
+                y=yuba_city_df['observed'],
+                mode='lines',
+                name='Yuba City (Observed)',
+                line=dict(color='green', width=2),
+                fill='none'  # Ensure no fill under the line
+            ),
+            row=1, col=2
+        )
+
+    # Update layout
+    fig.update_layout(
+        title=dict(
+            text="<b>Observed PM2.5 Levels: Chico vs Yuba City During Dixie Fire (07/13/2021 - 10/25/2021)</b>",
+            x=0.5,  # Center the title
+            xanchor="center"
+        ),
+        template="plotly_white",
+        height=600,
+        width=1400  # Increased width for a wider graph
+    )
+
+    # Customize individual subplot axes
+    fig.update_xaxes(
+        title_text="Time",
+        range=["2021-07-13", "2021-10-25"],  # Explicitly set x-axis range
+        row=1, col=1
+    )
+    fig.update_yaxes(title_text="PM2.5 (µg/m³)", row=1, col=1)
+    fig.update_xaxes(
+        title_text="Time",
+        range=["2021-07-13", "2021-10-25"],  # Explicitly set x-axis range
+        row=1, col=2
+    )
+    fig.update_yaxes(title_text="PM2.5 (µg/m³)", row=1, col=2)
+
+    # # Save the plot to an HTML file
+    # output_file = "chico_yuba_comparison.html"
+    # pio.write_html(fig, file=output_file, auto_open=True)  # auto_open=True will open the file in a browser
+
+    return fig
+
+
+# Example usage: Uncomment the following line to save and display the plot
+#plot_chico_yuba_comparison_side_by_side()
+
+
+
+
