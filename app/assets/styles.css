@@ -1,12 +1,13 @@
+/* Updated Colors */
 :root {
-    --color-primary: #3A5311;
-    --color-secondary: #4a90e2;
-    --color-accent: #50c878;
-    --color-text: #333333;
+    --color-primary: #2E7D32; /* Darker green for primary elements */
+    --color-secondary: #66BB6A; /* Lighter green for secondary elements */
+    --color-accent: #A5D6A7; /* Soft green accent */
+    --color-background: #E8F5E9; /* Light green background */
+    --color-card-yellow: #FFF9C4;
+    --color-card-green: #C8E6C9;
+    --color-text: #2E3B2F; /* Darker text for better contrast */
     --color-text-light: #ffffff;
-    --color-background: #f5f6fa;
-    --color-card-yellow: #fffde7;
-    --color-card-green: #e8f5e9;
     --spacing-unit: 1rem;
     --container-width: 1200px;
     --border-radius: 8px;
@@ -86,7 +87,7 @@ p {
 }
 
 .section--light {
-    background-color: var(--color-background);
+    background-color: var(--color-background); /* Light green background */
 }
 
 .section--white {
@@ -94,7 +95,7 @@ p {
 }
 
 .section--cta {
-    background-color: var(--color-secondary);
+    background-color: var(--color-secondary); /* Lighter green for call-to-action sections */
     color: var(--color-text-light);
 }
 
@@ -102,7 +103,7 @@ p {
 .hero {
     text-align: center;
     padding: calc(var(--spacing-unit) * 6) 0;
-    background-color: var(--color-primary);
+    background-color: var(--color-primary); /* Darker green for hero section */
     color: var(--color-text-light);
     position: relative;
 }
@@ -125,18 +126,22 @@ p {
     z-index: 2;
 }
 
+/* Hero Title */
 .hero-title {
     font-size: 4rem;
     font-weight: 700;
     margin-bottom: var(--spacing-unit);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: var(--color-text-light); /* Set font color to white */
 }
 
+/* Hero Subtitle */
 .hero-subtitle {
     font-size: 2rem;
     font-weight: 500;
     margin-bottom: calc(var(--spacing-unit) * 2);
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    color: var(--color-text-light); /* Set font color to white */
 }
 
 .hero-text {
@@ -155,6 +160,7 @@ p {
 }
 
 .info-card {
+    background-color: var(--color-card-green); /* Soft green for cards */
     padding: calc(var(--spacing-unit) * 2);
     border-radius: var(--border-radius);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -343,7 +349,7 @@ p {
 }
 
 .findings-box {
-    background: #F7FAFC;
+    background: var(--color-card-green); /* Soft green for findings box */
     border-radius: 6px;
     padding: 1.5rem;
     margin-top: 1.5rem;
@@ -376,15 +382,15 @@ p {
 }
 
 .analysis-box {
-    background: #ffffff;
+    background: var(--color-background); /* Light green for analysis box */
     border-radius: 8px;
     padding: 1.5rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    border: 1px solid #e2e8f0;
+    border: 1px solid #c8e6c9;
 }
 
 .content-box {
-    background: #f8f9fa;
+    background: var(--color-card-green); /* Soft green for content box */
     border-radius: 6px;
     padding: 1.5rem;
     margin-top: 1rem;
@@ -392,4 +398,16 @@ p {
 
 .dashboard-section {
     margin-bottom: 2rem;
+}
+
+/* Dashboard Title */
+.dashboard-title {
+    background-color: var(--color-primary); /* Match the nav bar color */
+    color: var(--color-text-light); /* White text for contrast */
+    padding: 1rem;
+    margin: 0;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }

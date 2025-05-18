@@ -116,10 +116,11 @@ layout = html.Div([
         html.H1("Analytics Dashboard", 
                 className="dashboard-title",
                 style={
-                    "backgroundColor": "#3A5311",
+                    "backgroundColor": "#2E7D32",  # Match the nav bar color
                     "color": "white",
                     "padding": "1rem",
-                    "margin": "0"
+                    "margin": "0",
+                    "textAlign": "center"
                 })
     ]),
     
@@ -164,8 +165,14 @@ layout = html.Div([
                 html.H2("Time Series Analysis", className="section-title"),
                 html.Div([
                     html.Div([
-                        layout_time_series(),
-                    ], className="content-box")
+                        layout_time_series()
+                    ], className="content-box"),
+                    html.P(
+                        "Figure: Daily PM₂.₅ at Alpine for 2021—blue shows actual measurements, red the Spatio-Temporal GNN’s total-PM₂.₅ predictions (including fire effects), "
+                        "green the ambient-only GNN baseline, and purple the isolated fire-specific PM₂.₅ component—demonstrating that the full model captures observed peaks during wildfire events "
+                        "while the ambient forecast stays lower and the fire-specific trace highlights the wildfire contribution.",
+                        style={"textAlign": "center", "marginTop": "1rem", "fontSize": "16px", "color": "#4A5568"}
+                    )
                 ], className="analysis-box")
             ], className="dashboard-section"),
 
