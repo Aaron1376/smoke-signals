@@ -35,6 +35,7 @@ Please cite the following if using the dataset:
 > Liao, K., Buch, J., Lamb, K. D., & Gentine, P.
 > "Simulating the air quality impact of prescribed fires using graph neural network-based PM2.5 forecasts."
 > Environmental Data Science, 2025.
+> [https://doi.org/10.1017/eds.2025.4](https://doi.org/10.1017/eds.2025.4)
 
 > Liao, K.
 > "PM2.5_Forecasting_GNN."
