@@ -4,7 +4,7 @@
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 
 This is the official repository for **"Smoke Signals"**,
-a CS 163 final project by Aaron Sam and Jonathan Manzano.
+a CS 163 capstone project by Jonathan Manzano and Aaron Sam.
 This project analyzes PM2.5 levels during California wildfires
 to forecast air quality and identify key environmental factors.
 The findings are presented in an interactive web dashboard.
