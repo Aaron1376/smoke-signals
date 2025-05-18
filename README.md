@@ -34,9 +34,7 @@ Our data was collected from the following sources:
 
 - **[California Air Resources Board—CARB](https://ww2.arb.ca.gov/)**
 - **[U.S. EPA Air Quality System—AQS](https://www.epa.gov/aqs)**
-- *
-  *[ERA5 Reanalysis—ECMWF](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)
-  **
+- **[ERA5 Reanalysis—ECMWF](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)**
 
 Please cite the following if using the dataset:
 
