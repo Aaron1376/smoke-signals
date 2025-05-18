@@ -183,7 +183,7 @@ smoke-signals/
 │   ├── assets/
 │   │   ├── *.css               # Styling (colors,spacing,layout dicts)
 │   │   ├── *.html              # Reusable navigation bar
-│   │   └── *.[jpg/png/webp]    #
+│   │   └── *.[jpg/png/webp]    # Images
 │   │
 │   ├── components/
 │   │   ├── __init__.py
@@ -194,17 +194,17 @@ smoke-signals/
 │   │
 │   ├── modules/
 │   │   ├── __init__.py
-│   │   ├── data_loader.py      #
-│   │   └── utils.py            #
+│   │   ├── data_loader.py      # Script to pull data from Google Cloud
+│   │   └── utils.py            # Helper Script for data_loader.py
 │   │
 │   ├── pages/
 │   │   ├── __init__.py
 │   │   ├── analytics.py        # Main research findings and visualizations
 │   │   ├── home.py             # Homepage content
-│   │   ├── methodology.py      #
+│   │   ├── methodology.py      # Methodology used in experiment
 │   │   └── proposal.py         # Project goals and broader impact
 │   │
-│   ├── .gcloudignore           #
+│   ├── .gcloudignore           # Google Cloud ignore
 │   ├── app.py                  # Main Dash entry point
 │   └── app.yaml                # Google App Engine deployment config
 │
@@ -223,15 +223,12 @@ smoke-signals/
 
 ## Key Files
 
-| File/Dir                    | Description                                     |
-|-----------------------------|-------------------------------------------------|
-| `requirements.txt`          | List of Python packages                         |
-| `app/app.py`                | Launches the Dash web app                       |
-| `app/pages/`                | Pages: `home.py`, `analytics.py`, `proposal.py` |
-| `app/visuals/analysis.py`   | All Dash charts, maps, and visual logic         |
-| `pm25gnn/model/PM25_GNN.py` | Model: Graph Neural Network trained on PM2.5    |
-| `app/app.yaml`              | App Engine configuration for deployment         |
-|
+| File/Dir                    | Description                                       |
+|-----------------------------|---------------------------------------------------|
+| `app/app.py`                | Launches the Dash web app                         |
+| `app/app.yaml`              | App Engine configuration for deployment           |
+| `notebooks/`                | Contains the different phases of machine learning |
+| `pm25gnn/model/PM25_GNN.py` | Model: Graph Neural Network trained on PM2.5      |
 
 ## Key Features
 
