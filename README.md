@@ -2,6 +2,7 @@
 
 ![GitHub License](https://img.shields.io/github/license/jonathan-manzano/smoke-signals)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+[![ccds](https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter)](https://cookiecutter-data-science.drivendata.org/)
 
 This is the official repository for **"Smoke Signals"**,
 a CS 163 capstone project by Jonathan Manzano and Aaron Sam.
@@ -38,7 +39,8 @@ Our data was collected from the following sources:
 Please cite the following if using the dataset:
 
 > Liao, K., Buch, J., Lamb, K. D., & Gentine, P.
-> "Simulating the air quality impact of prescribed fires using graph neural network-based PM2.5 forecasts."
+> "Simulating the air quality impact of prescribed fires using graph neural
+> network-based PM2.5 forecasts."
 > Environmental Data Science, 2025.
 > [https://doi.org/10.1017/eds.2025.4](https://doi.org/10.1017/eds.2025.4)
 
@@ -146,24 +148,37 @@ experimentation, fast iteration, and seamless deployment.
 
 ### 3. Statistical Testing
 
+- **Baseline Model**: Random Forest Classifier for explainability and benchmarking
 - **Tests Used**: Chi-squared tests
 - **Purpose**: Validate the significance of key features before modeling
-- **Visuals**: Feature Importance chart and Correlation Heatmaps
+- **Visuals**: Feature Importance chart
 
 ### 4. Model Training
 
-- **Baseline Model**: Random Forest Classifier for explainability and benchmarking
-- **Advanced Model**: Graph neural network to predict PM2.5 levels
-- **Evaluation**: Compared predicted to the observed PM2.5 levels
+- **Total PM2.5 GNN**:
+  This neural network combines meteorological data with fire
+  activity variables to forecast combined ambient and wildfire PM2.5 levels.
+- **Ambient-Only GNN**:
+  The GNN architecture was trained only on meteorological factors,
+  with no input from fires,
+  to predict background PM2.5 levels based on weather patterns.
+- **Graph Construction & Temporal Encoding**:
+  Stations are considered as network nodes connected by geographic proximity edges.
+  Each model uses fixed-length temporal windows (e.g., past 6 hours) to quantify
+  persistence and trends.
+- **Optimization & Evaluation**: Both networks minimize mean squared error using Adam
+  $ (\text{LR} = 1 \times 10^{-3}, \text{batch} = 32) $ across $100 \; \text{epochs}$.
+  Performance is compared via $\text{RMSE}$ and $\text{R}^2$,
+  with the Total model significantly outperforming during big wildfire outbreaks.
 
 ### 5. Visualization & Analysis
 
 - **Libraries**: Plotly, Seaborn, Folium, Dash, Scipy
 - **Visualizations**:
-  - Time Series Forecasting
-  - Interactive map of sensors
-  - Heatmaps of Meteorological data
-  - Feature importance comparisons
+    - Time Series Forecasting
+    - Interactive map of sensors
+    - Heatmaps of Meteorological data
+    - Feature importance comparisons
 - **Widgets**: Precision-adjustable Folium maps for mapping
 
 ### 6. Web Dashboard Deployment
@@ -181,7 +196,7 @@ smoke-signals/
 │   ├── assets/
 │   │   ├── *.css               # Styling (colors,spacing,layout dicts)
 │   │   ├── *.html              # Reusable navigation bar
-│   │   └── *.[jpg/png/webp]    #
+│   │   └── *.[jpg/png/webp]    # Images
 │   │
 │   ├── components/
 │   │   ├── __init__.py
@@ -192,17 +207,17 @@ smoke-signals/
 │   │
 │   ├── modules/
 │   │   ├── __init__.py
-│   │   ├── data_loader.py      #
-│   │   └── utils.py            #
+│   │   ├── data_loader.py      # Script to pull data from Google Cloud
+│   │   └── utils.py            # Helper Script for data_loader.py
 │   │
 │   ├── pages/
 │   │   ├── __init__.py
 │   │   ├── analytics.py        # Main research findings and visualizations
 │   │   ├── home.py             # Homepage content
-│   │   ├── methodology.py      #
+│   │   ├── methodology.py      # Methodology used in experiment
 │   │   └── proposal.py         # Project goals and broader impact
 │   │
-│   ├── .gcloudignore           #
+│   ├── .gcloudignore           # Google Cloud ignore
 │   ├── app.py                  # Main Dash entry point
 │   └── app.yaml                # Google App Engine deployment config
 │
@@ -221,30 +236,45 @@ smoke-signals/
 
 ## Key Files
 
-| File/Dir                    | Description                                     |
-|-----------------------------|-------------------------------------------------|
-| `requirements.txt`          | List of Python packages                         |
-| `app/app.py`                | Launches the Dash web app                       |
-| `app/pages/`                | Pages: `home.py`, `analytics.py`, `proposal.py` |
-| `app/visuals/analysis.py`   | All Dash charts, maps, and visual logic         |
-| `pm25gnn/model/PM25_GNN.py` | Model: Graph Neural Network trained on PM2.5    |
-| `app/app.yaml`              | App Engine configuration for deployment         |
-|
+| File/Dir                    | Description                                       |
+|-----------------------------|---------------------------------------------------|
+| `app/app.py`                | Launches the Dash web app                         |
+| `app/app.yaml`              | App Engine configuration for deployment           |
+| `notebooks/`                | Contains the different phases of machine learning |
+| `pm25gnn/model/PM25_GNN.py` | Model: Graph Neural Network trained on PM2.5      |
+
+### Notebook Key
+
+`X-YY-AAA-[description-of-notebook].ipynb`
+
+- `X-YY`: `PHASE-NOTEBOOK`.
+  `NOTEBOOK` is just the Nth notebook in that phase to be created.
+  For phases of the project,
+  we generally use a scheme like the following:
+  - `0`:
+    Data Exploration
+  - `1`:
+    Data cleaning and Feature Creation -
+    Data Cleaning and Feature Creation -
+    often writes data to `data/processed`
+  - `2`: Modeling -
+    training machine learning models
+- `AAA`: Authors Initials
 
 ## Key Features
 
 - Time Series Forecasting:
-Uses GNNs for accurate PM2.5 predictions
+  Uses GNNs for accurate PM2.5 predictions
 - Graph Neural Networks:
-Leverages spatial relationships between monitoring stations for improved forecasting.
+  Leverages spatial relationships between monitoring stations for improved forecasting.
 - Interactive Visualizations:
-Includes time series plots.
+  Includes time series plots.
 - Modular Dash Layout:
-Each section of the site (Home, Objectives, Findings)
-is rendered via individual Dash pages.
+  Each section of the site (Home, Objectives, Findings)
+  is rendered via individual Dash pages.
 - Cloud Deployment:
-Fully deployed to Google Cloud Platform using App Engine,
-with configuration managed by app.yaml.
+  Fully deployed to Google Cloud Platform using App Engine,
+  with configuration managed by app.yaml.
 
 ---
 
