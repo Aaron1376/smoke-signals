@@ -1,6 +1,10 @@
 # Data
-data/processed
-data/raw
+data/processed/*.csv
+data/processed/*.txt
+data/raw/*.npy
+data/raw/*.pkl
+data/raw/*.csv
+data/raw/*.txt
 
 # Mac OS-specific storage files
 .DS_Store
