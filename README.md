@@ -1,5 +1,8 @@
 # Smoke Signals: Time Series Forecasting of PM2.5 Amid California Wildfires
 
+![GitHub License](https://img.shields.io/github/license/jonathan-manzano/smoke-signals)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+
 This is the official repository for **"Smoke Signals"**,
 a CS 163 final project by Aaron Sam and Jonathan Manzano.
 This project analyzes PM2.5 levels during California wildfires
@@ -60,21 +63,17 @@ Please cite the following if using the dataset:
 
 ### Install Dependencies
 
-Clone the repo and install required packages:
+This repo uses [uv](https://docs.astral.sh/uv/) to manage dependencies.
 
 ```shell
-git clone https://github.com/your-username/smoke-signals.git
-cd smoke-signals
-python -m venv env
-source env/bin/activate  # Windows: .\env\Scripts\activate
-pip install -r requirements.txt
+uv sync
 ```
 
 ### Run Locally
 
 ```shell
 cd app/
-python app.py
+python app
 ```
 
 ### Testing the Setup
@@ -85,6 +84,23 @@ To ensure the web application and model code run correctly:
    [http://127.0.0.1:8050](http://127.0.0.1:8050).
 2. Open model.py and run it to test the forecasting pipeline and view printed metrics.
 3. Ensure your environment has access to BigQuery if fetching live data.
+
+---
+
+## Deploy to Google App Engine
+
+```shell
+gcloud app deploy
+```
+
+Make sure your Google Cloud project is set up and authenticated locally using:
+
+```shell
+gcloud auth login
+gcloud config set project [YOUR_PROJECT_ID]
+```
+
+---
 
 ## Project Pipeline
 
@@ -108,19 +124,19 @@ flowchart TD
     id5 --> id6
 ```
 
-### Pipeline Component Breakdown
+## Pipeline Component Breakdown
 
 Each stage of our pipeline is modular and purpose-built to support clear
 experimentation, fast iteration, and seamless deployment.
 
-#### 1. Data Collection
+### 1. Data Collection
 
 - **Source**:
   [PM2.5_Forecasting_GNN](https://github.com/kyleenliao/PM2.5_Forecasting_GNN)
 - **Automation**: Queried and filtered with BigQuery to ensure relevant, high-quality
   data for modeling
 
-#### 2. Data Cleaning & Feature Engineering
+### 2. Data Cleaning & Feature Engineering
 
 - **Structured Features**: Meteorological (temperature, surface pressure, precipitation,
   frp), PM2.5, cities and timestamp
@@ -128,20 +144,19 @@ experimentation, fast iteration, and seamless deployment.
     - Created a AQI categorical column
     - Converted numpy files to a csv file
 
-#### 3. Statistical Testing
+### 3. Statistical Testing
 
 - **Tests Used**: Chi-squared tests
 - **Purpose**: Validate the significance of key features before modeling
 - **Visuals**: Feature Importance chart and Correlation Heatmaps
 
-#### 4. Model Training
+### 4. Model Training
 
 - **Baseline Model**: Random Forest Classifier for explainability and benchmarking
 - **Advanced Model**: Graph neural network to predict PM2.5 levels
-- **Data Configurations**:
 - **Evaluation**: Compared predicted to the observed PM2.5 levels
 
-#### 5. Visualization & Analysis
+### 5. Visualization & Analysis
 
 - **Libraries**: Plotly, Seaborn, Folium, Dash, Scipy
 - **Visualizations**:
@@ -151,29 +166,14 @@ experimentation, fast iteration, and seamless deployment.
   - Feature importance comparisons
 - **Widgets**: Precision-adjustable Folium maps for mapping
 
-#### 6. Web Dashboard Deployment
+### 6. Web Dashboard Deployment
 
 - **Frontend**: Modular layout using Dash components (`pages/`, `nav_bar.py`)
 - **Backend**: Python with Dash callbacks and plotting logic (`components/`)
 - **Hosting**: Google App Engine (`app.yaml` handles configuration)
 - **Structure**: Four main pages: Home, Objectives, Methodology, & Findings
-- 
----
 
-### Deploy to Google App Engine
-
-```shell
-gcloud app deploy
-```
-
-Make sure your Google Cloud project is set up and authenticated locally using:
-
-```shell
-gcloud auth login
-gcloud config set project [YOUR_PROJECT_ID]
-```
-
-### Repository Structure
+## Repository Structure
 
 ```text
 smoke-signals/
@@ -241,4 +241,3 @@ with configuration managed by app.yaml.
 
 - [Jonathan Manzano](https://github.com/jonathan-manzano)
 - [Aaron Sam](https://github.com/Aaron1376)
-
