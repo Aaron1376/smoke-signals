@@ -1,18 +1,20 @@
 # Smoke Signals: Time Series Forecasting of PM2.5 Amid California Wildfires
 
-This is the official repository for **"Smoke Signals"**, a CS 163 final project by Aaron
-Sam and Jonathan Manzano. This project analyzes PM2.5 levels during California wildfires
-to forecast air quality and identify key environmental factors. The findings are
-presented in an interactive web dashboard.
+This is the official repository for **"Smoke Signals"**,
+a CS 163 final project by Aaron Sam and Jonathan Manzano.
+This project analyzes PM2.5 levels during California wildfires
+to forecast air quality and identify key environmental factors.
+The findings are presented in an interactive web dashboard.
 
-**Live Website**: [https://smoke-signals-pmgnn-457202.uw.r.appspot.com/analytics]
+**Live Website**:
+[Smoke Signals](https://smoke-signals-pmgnn-457202.uw.r.appspot.com/analytics)
 
 ---
 
 ## Project Overview
 
-Our goal is to investigate how wildfire events impact PM2.5 levels and forecast air
-quality using advanced time series models.
+Our goal is to investigate how wildfire events impact PM2.5 levels
+and forecast air quality using advanced time series models.
 We:
 
 - Perform statistical analysis and feature engineering
@@ -26,9 +28,9 @@ We:
 
 Our data was collected from the following sources:
 
-- **[California Air Resources Board (CARB)](https://ww2.arb.ca.gov/)**
-- **[U.S. EPA Air Quality System (AQS)](https://www.epa.gov/aqs)**
-- **[ERA5 Reanalysis (ECMWF)](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)**
+- **[California Air Resources Board—CARB](https://ww2.arb.ca.gov/)**
+- **[U.S. EPA Air Quality System—AQS](https://www.epa.gov/aqs)**
+- **[ERA5 Reanalysis—ECMWF](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)**
 
 Please cite the following if using the dataset:
 
@@ -64,7 +66,7 @@ Clone the repo and install required packages:
 git clone https://github.com/your-username/smoke-signals.git
 cd smoke-signals
 python -m venv env
-source env/bin/activate  # On Windows: .\env\Scripts\activate
+source env/bin/activate  # Windows: .\env\Scripts\activate
 pip install -r requirements.txt
 ```
 
@@ -80,7 +82,7 @@ python app.py
 To ensure the web application and model code run correctly:
 
 1. Run webapp.py and confirm Dash loads on
-[http://127.0.0.1:8050](http://127.0.0.1:8050).
+   [http://127.0.0.1:8050](http://127.0.0.1:8050).
 2. Open model.py and run it to test the forecasting pipeline and view printed metrics.
 3. Ensure your environment has access to BigQuery if fetching live data.
 
@@ -99,7 +101,6 @@ flowchart TD
     id4(Machine Learning)
     id5(Evaluation & Visualization)
     id6(Web Dashboard Deployment)
-
     id1 --> id2
     id2 --> id3
     id3 --> id4
@@ -107,19 +108,19 @@ flowchart TD
     id5 --> id6
 ```
 
-## Pipeline Component Breakdown
+### Pipeline Component Breakdown
 
 Each stage of our pipeline is modular and purpose-built to support clear
 experimentation, fast iteration, and seamless deployment.
 
-### 1. Data Collection
+#### 1. Data Collection
 
-- **Source**: 
-- **Scope**:
+- **Source**:
+  [PM2.5_Forecasting_GNN](https://github.com/kyleenliao/PM2.5_Forecasting_GNN)
 - **Automation**: Queried and filtered with BigQuery to ensure relevant, high-quality
   data for modeling
 
-### 2. Data Cleaning & Feature Engineering
+#### 2. Data Cleaning & Feature Engineering
 
 - **Structured Features**: Meteorological (temperature, surface pressure, precipitation,
   frp), PM2.5, cities and timestamp
@@ -127,116 +128,117 @@ experimentation, fast iteration, and seamless deployment.
     - Created a AQI categorical column
     - Converted numpy files to a csv file
 
-### 3. Statistical Testing
+#### 3. Statistical Testing
 
 - **Tests Used**: Chi-squared tests
 - **Purpose**: Validate the significance of key features before modeling
 - **Visuals**: Feature Importance chart and Correlation Heatmaps
 
-### 4. Model Training
+#### 4. Model Training
 
 - **Baseline Model**: Random Forest Classifier for explainability and benchmarking
 - **Advanced Model**: Graph neural network to predict PM2.5 levels
 - **Data Configurations**:
 - **Evaluation**: Compared predicted to the observed PM2.5 levels
 
-### 5. Visualization & Analysis
+#### 5. Visualization & Analysis
 
 - **Libraries**: Plotly, Seaborn, Folium, Dash, Scipy
 - **Visualizations**:
-    - Time Series Forecasting
-    - Interactive map of sensors
-    - Heatmaps of Meteorological data
-    - Feature importance comparisons
+  - Time Series Forecasting
+  - Interactive map of sensors
+  - Heatmaps of Meteorological data
+  - Feature importance comparisons
 - **Widgets**: Precision-adjustable Folium maps for mapping
 
-### 6. Web Dashboard Deployment
+#### 6. Web Dashboard Deployment
 
 - **Frontend**: Modular layout using Dash components (`pages/`, `nav_bar.py`)
 - **Backend**: Python with Dash callbacks and plotting logic (`components/`)
 - **Hosting**: Google App Engine (`app.yaml` handles configuration)
-- **Structure**: Four main pages — Home, Objectives, Methodology, Findings — plus
-  reusable assets and styles
-
+- **Structure**: Four main pages: Home, Objectives, Methodology, & Findings
+- 
 ---
 
 ### Deploy to Google App Engine
 
-```bash
+```shell
 gcloud app deploy
 ```
 
 Make sure your Google Cloud project is set up and authenticated locally using:
 
-```bash
+```shell
 gcloud auth login
 gcloud config set project [YOUR_PROJECT_ID]
 ```
 
 ### Repository Structure
 
-```plaintext
+```text
 smoke-signals/
 ├── app/
+│   │
 │   ├── components/
-│   │   ├── nav_bar.py             # Reusable navigation bar
-│   │   ├── graphs.py              # graphs for site
-│   │   └── time_series.py         # time series graphs
+│   │   ├── nav_bar.py       # Reusable navigation bar
+│   │   ├── graphs.py        # graphs for site
+│   │   └── time_series.py   # time series graphs
+│   │
 │   ├── modules/
 │   │     ├── data_loader.py
 │   │     └── utils.py
-│   ├── assets/
-│   │   └── [styles.css]           # Styling   
-│   │                        (colors,spacing,layout dicts)
-│   ├── pages/
-│   │   ├── home.py                # Homepage content
-│   │   ├── analytics.py           # Main research findings 
-│   │   │                          and visualizations
-│   │   └── proposal.py            # Project goals and 
-│   │                              broader impact
 │   │
-│   │ 
-│   ├── app.py                  # Main Dash entry point
-│   ├── requirements.txt           # Project dependencies
-│   └── app.yaml                   # Google App Engine deployment config
+│   ├── assets/
+│   │   └── [styles.css]     # Styling (colors,spacing,layout dicts)
+│   │
+│   ├── pages/
+│   │   ├── home.py          # Homepage content
+│   │   ├── analytics.py     # Main research findings and visualizations
+│   │   └── proposal.py      # Project goals and broader impact
+│   │
+│   ├── app.py               # Main Dash entry point
+│   ├── requirements.txt     # Project dependencies
+│   └── app.yaml             # Google App Engine deployment config
 │
 ├── model/
-│   └── model.py                   # ARIMA, LSTM, and GNN pipelines
+│   └── model.py             # ARIMA, LSTM, and GNN pipelines
 │
-└── data/                          # (Optional) Sample processed datasets
-
+└── data/
 ```
 
 ---
 
 ## Key Files
 
-| File/Dir                  | Description                                                         |
-|---------------------------|---------------------------------------------------------------------|
-| `app/app.py`              | Launches the Dash web app                                           |
-| `app/pages/`              | Pages: `home.py`, `analytics.py`, `proposal.py`                     |
-| `app/visuals/analysis.py` | All Dash charts, maps, and visual logic                             |
-| `model/model.py`          | ML models: TF-IDF + PyTorch NN, Random Forests, feature engineering |
-| `app/requirements.txt`    | List of Python packages                                             |
-| `app/app.yaml`            | App Engine configuration for deployment                             |
+| File/Dir                    | Description                                     |
+|-----------------------------|-------------------------------------------------|
+| `requirements.txt`          | List of Python packages                         |
+| `app/app.py`                | Launches the Dash web app                       |
+| `app/pages/`                | Pages: `home.py`, `analytics.py`, `proposal.py` |
+| `app/visuals/analysis.py`   | All Dash charts, maps, and visual logic         |
+| `pm25gnn/model/PM25_GNN.py` | Model: Graph Neural Network trained on PM2.5    |
+| `app/app.yaml`              | App Engine configuration for deployment         |
 |
 
 ## Key Features
 
-- Time Series Forecasting: Uses GNNs for accurate PM2.5 predictions
-- Graph Neural Networks: Leverages spatial relationships between monitoring stations for
-  improved forecasting.
-- Interactive Visualizations: Includes time series plots, seasonal decomposition, and
-  spatial heatmaps.
-- Modular Dash Layout: Each section of the site (Home, Objectives, Findings) is rendered
-  via individual Dash pages.
-- Cloud Deployment: Fully deployed to Google Cloud Platform using App Engine, with
-  configuration managed by app.yaml.
+- Time Series Forecasting:
+Uses GNNs for accurate PM2.5 predictions
+- Graph Neural Networks:
+Leverages spatial relationships between monitoring stations for improved forecasting.
+- Interactive Visualizations:
+Includes time series plots.
+- Modular Dash Layout:
+Each section of the site (Home, Objectives, Findings)
+is rendered via individual Dash pages.
+- Cloud Deployment:
+Fully deployed to Google Cloud Platform using App Engine,
+with configuration managed by app.yaml.
 
 ---
 
 ## Authors
 
-- Jonathan Manzano
-- Aaron Sam
+- [Jonathan Manzano](https://github.com/jonathan-manzano)
+- [Aaron Sam](https://github.com/Aaron1376)
 
