@@ -178,32 +178,43 @@ experimentation, fast iteration, and seamless deployment.
 ```text
 smoke-signals/
 ├── app/
+│   ├── assets/
+│   │   ├── *.css               # Styling (colors,spacing,layout dicts)
+│   │   ├── *.html              # Reusable navigation bar
+│   │   └── *.[jpg/png/webp]    #
 │   │
 │   ├── components/
-│   │   ├── nav_bar.py       # Reusable navigation bar
-│   │   ├── graphs.py        # graphs for site
-│   │   └── time_series.py   # time series graphs
+│   │   ├── __init__.py
+│   │   ├── corr_heatmap.py     # Reusable navigation bar
+│   │   ├── graphs.py           # Graphs for site
+│   │   ├── nav_bar.py          # Reusable navigation bar
+│   │   └── time_series.py      # Time series graphs
 │   │
 │   ├── modules/
-│   │     ├── data_loader.py
-│   │     └── utils.py
-│   │
-│   ├── assets/
-│   │   └── [styles.css]     # Styling (colors,spacing,layout dicts)
+│   │   ├── __init__.py
+│   │   ├── data_loader.py      #
+│   │   └── utils.py            #
 │   │
 │   ├── pages/
-│   │   ├── home.py          # Homepage content
-│   │   ├── analytics.py     # Main research findings and visualizations
-│   │   └── proposal.py      # Project goals and broader impact
+│   │   ├── __init__.py
+│   │   ├── analytics.py        # Main research findings and visualizations
+│   │   ├── home.py             # Homepage content
+│   │   ├── methodology.py      #
+│   │   └── proposal.py         # Project goals and broader impact
 │   │
-│   ├── app.py               # Main Dash entry point
-│   ├── requirements.txt     # Project dependencies
-│   └── app.yaml             # Google App Engine deployment config
+│   ├── .gcloudignore           #
+│   ├── app.py                  # Main Dash entry point
+│   └── app.yaml                # Google App Engine deployment config
 │
-├── model/
-│   └── model.py             # ARIMA, LSTM, and GNN pipelines
+├── data/                       # Store dataset from Google Drive Here
 │
-└── data/
+├── models/                     # Where to store trained PM2.5 GNN Weights
+│
+├── notebooks/                  # Jupyter Notebooks of machine learning process
+│
+├── pm25gnn/                    # Modified clone of PM2.5 Forcasting Repo
+│
+└── smoke_signals/              # Smoke Signals Module
 ```
 
 ---
