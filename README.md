@@ -148,15 +148,28 @@ experimentation, fast iteration, and seamless deployment.
 
 ### 3. Statistical Testing
 
+- **Baseline Model**: Random Forest Classifier for explainability and benchmarking
 - **Tests Used**: Chi-squared tests
 - **Purpose**: Validate the significance of key features before modeling
-- **Visuals**: Feature Importance chart and Correlation Heatmaps
+- **Visuals**: Feature Importance chart
 
 ### 4. Model Training
 
-- **Baseline Model**: Random Forest Classifier for explainability and benchmarking
-- **Advanced Model**: Graph neural network to predict PM2.5 levels
-- **Evaluation**: Compared predicted to the observed PM2.5 levels
+- **Total PM2.5 GNN**:
+  This neural network combines meteorological data with fire
+  activity variables to forecast combined ambient and wildfire PM2.5 levels.
+- **Ambient-Only GNN**:
+  The GNN architecture was trained only on meteorological factors,
+  with no input from fires,
+  to predict background PM2.5 levels based on weather patterns.
+- **Graph Construction & Temporal Encoding**:
+  Stations are considered as network nodes connected by geographic proximity edges.
+  Each model uses fixed-length temporal windows (e.g., past 6 hours) to quantify
+  persistence and trends.
+- **Optimization & Evaluation**: Both networks minimize mean squared error using Adam
+  $ (\text{LR} = 1 \times 10^{-3}, \text{batch} = 32) $ across $100 \; \text{epochs}$.
+  Performance is compared via $\text{RMSE}$ and $\text{R}^2$,
+  with the Total model significantly outperforming during big wildfire outbreaks.
 
 ### 5. Visualization & Analysis
 
@@ -229,6 +242,24 @@ smoke-signals/
 | `app/app.yaml`              | App Engine configuration for deployment           |
 | `notebooks/`                | Contains the different phases of machine learning |
 | `pm25gnn/model/PM25_GNN.py` | Model: Graph Neural Network trained on PM2.5      |
+
+### Notebook Key
+
+`X-YY-AAA-[description-of-notebook].ipynb`
+
+- `X-YY`: `PHASE-NOTEBOOK`.
+  `NOTEBOOK` is just the Nth notebook in that phase to be created.
+  For phases of the project,
+  we generally use a scheme like the following:
+  - `0`:
+    Data Exploration
+  - `1`:
+    Data cleaning and Feature Creation -
+    Data Cleaning and Feature Creation -
+    often writes data to `data/processed`
+  - `2`: Modeling -
+    training machine learning models
+- `AAA`: Authors Initials
 
 ## Key Features
 
