@@ -2,6 +2,7 @@
 
 ![GitHub License](https://img.shields.io/github/license/jonathan-manzano/smoke-signals)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+[![ccds](https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter)](https://cookiecutter-data-science.drivendata.org/)
 
 This is the official repository for **"Smoke Signals"**,
 a CS 163 capstone project by Jonathan Manzano and Aaron Sam.
@@ -33,12 +34,15 @@ Our data was collected from the following sources:
 
 - **[California Air Resources Board—CARB](https://ww2.arb.ca.gov/)**
 - **[U.S. EPA Air Quality System—AQS](https://www.epa.gov/aqs)**
-- **[ERA5 Reanalysis—ECMWF](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)**
+- *
+  *[ERA5 Reanalysis—ECMWF](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)
+  **
 
 Please cite the following if using the dataset:
 
 > Liao, K., Buch, J., Lamb, K. D., & Gentine, P.
-> "Simulating the air quality impact of prescribed fires using graph neural network-based PM2.5 forecasts."
+> "Simulating the air quality impact of prescribed fires using graph neural
+> network-based PM2.5 forecasts."
 > Environmental Data Science, 2025.
 > [https://doi.org/10.1017/eds.2025.4](https://doi.org/10.1017/eds.2025.4)
 
@@ -160,10 +164,10 @@ experimentation, fast iteration, and seamless deployment.
 
 - **Libraries**: Plotly, Seaborn, Folium, Dash, Scipy
 - **Visualizations**:
-  - Time Series Forecasting
-  - Interactive map of sensors
-  - Heatmaps of Meteorological data
-  - Feature importance comparisons
+    - Time Series Forecasting
+    - Interactive map of sensors
+    - Heatmaps of Meteorological data
+    - Feature importance comparisons
 - **Widgets**: Precision-adjustable Folium maps for mapping
 
 ### 6. Web Dashboard Deployment
@@ -234,17 +238,17 @@ smoke-signals/
 ## Key Features
 
 - Time Series Forecasting:
-Uses GNNs for accurate PM2.5 predictions
+  Uses GNNs for accurate PM2.5 predictions
 - Graph Neural Networks:
-Leverages spatial relationships between monitoring stations for improved forecasting.
+  Leverages spatial relationships between monitoring stations for improved forecasting.
 - Interactive Visualizations:
-Includes time series plots.
+  Includes time series plots.
 - Modular Dash Layout:
-Each section of the site (Home, Objectives, Findings)
-is rendered via individual Dash pages.
+  Each section of the site (Home, Objectives, Findings)
+  is rendered via individual Dash pages.
 - Cloud Deployment:
-Fully deployed to Google Cloud Platform using App Engine,
-with configuration managed by app.yaml.
+  Fully deployed to Google Cloud Platform using App Engine,
+  with configuration managed by app.yaml.
 
 ---
 
